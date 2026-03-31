@@ -5,35 +5,51 @@ export class SubjectPage {
     readonly tabMuen: Locator;
     readonly addSubjectBTN: Locator;
     readonly courseIdDropdown: Locator;
-    readonly semester: Locator;
-    readonly planType: Locator;
+    readonly semesterDropdown: Locator;
+    readonly planTypeDropdown: Locator;
+    readonly subjectIdField: Locator;
+    readonly thaiSubjectNameField: Locator;
+    readonly engSubjectNameField: Locator;
+    readonly creditsField: Locator;
 
     constructor(page: Page) {
         this.page = page;
         this.tabMuen = page.locator('.list-group');
         this.addSubjectBTN = page.getByRole('link', { name: '+ เพิ่มรายวิชาใหม่' });
         this.courseIdDropdown = page.locator('[name="course_id"]');
-        this.semester = page.locator('[name="semester"]');
-        this.planType = page.locator('[name=plan_type]');
+        this.semesterDropdown = page.locator('[name="semester"]');
+        this.planTypeDropdown = page.locator('[name="plan_type"]');
+        this.subjectIdField = page.locator('[name="subject_id"]');
+        this.thaiSubjectNameField = page.locator('[name="thai_subject"]');
+        this.engSubjectNameField = page.locator('[name="eng"]');
+        this.creditsField = page.locator('[name="credits"]');
     }
 
     async selectMunuTab(tabname: string) {
         await this.tabMuen.filter({ hasText: tabname }).click();
     }
 
+    async selectOptionForCourseIdField(id: number){
+        await this.courseIdDropdown.selectOption({ index: id });
+    }
+
     async clickAddSubjectButton(){
         await this.addSubjectBTN.click();
     }
 
-    async clickCourseIDfield(){
-        await this.courseIdDropdown.click();
+    async fillSubjectIdField(subjectID: string){
+        await this.subjectIdField.fill(subjectID);
     }
 
-    async clickSemesterfield(){
-        await this.semester.click();
+    async fillThaiSubjectNameField(subjectName: string){
+        await this.thaiSubjectNameField.fill(subjectName);
     }
 
-    async clickOPlanTypefield(){
-        await this.planType.click();
-    }
+    async fillEngSubjectNameField(subjectName: string){
+        await this.engSubjectNameField.fill(subjectName);
+    }   
+
+    async fillCreditsFieldField(creadit: string){
+        await this.creditsField.fill(creadit);
+    } 
 }

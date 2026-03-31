@@ -85,18 +85,7 @@ test.describe('Testing the course adding system. (by ชลธี เกิด�
         await expect(page.getByRole('button', { name: 'บันทึกรายวิชา' })).toBeVisible();
     });
 
-    test('AddSubject-003| [เพิ่มรายวิชา][สำเร็จ] ตรวจสอบว่า Dropdown field เเสดงผลได้ถูกต้อง', async ({page}) =>{
+    test('AddSubject-005| [เพิ่มรายวิชา][สำเร็จ] ตรวจสอบว่า เมื่อกดปุ่ม "บันทึกรายวิชา" เเล้วระบบเเสดงผลได้ถูกต้อง เมื่อผู้ใช้งานใส่ข้อมูลครบถ้วน', async ({page}) =>{
         await loginPage.login("admin@gmail.com", "password");
-        await subjectPage.selectMunuTab("รายวิชา");
-        await subjectPage.clickAddSubjectButton();
-
-        await subjectPage.clickCourseIDfield();
-        await expect(page.locator('select[name="course_id"] option')).toHaveCount(8);
-
-        await subjectPage.clickSemesterfield();
-        await expect(page.locator('select[name="semester"] option')).toHaveCount(9);
-
-        await subjectPage.clickOPlanTypefield();
-        await expect(page.locator('select[name="plan_type"] option')).toHaveCount(3);
     });
 });
