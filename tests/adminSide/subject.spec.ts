@@ -30,62 +30,93 @@ test.describe('Testing the course adding system. (by ชลธี เกิด�
         //Requried field
         //หลักสูตร (Course)
         await expect(page.getByText('หลักสูตร (Course) *')).toBeVisible();
-        const CourseIDfield = await page.locator('[name="course_id"]');
-        await expect(await CourseIDfield.evaluate(el => el.tagName)).toBe('SELECT');
-        await expect(CourseIDfield).toContainText('-- เลือกหลักสูตร --');
+        await expect(await subjectPage.courseIdDropdown.evaluate(el => el.tagName)).toBe('SELECT');
+        await expect(subjectPage.courseIdDropdown).toContainText('-- เลือกหลักสูตร --');
         //รหัสรายวิชา
         await expect(page.getByText('รหัสรายวิชา *')).toBeVisible();
         await expect(page.getByRole('textbox', { name: 'เช่น XXXXXX , SUXXX' })).toBeVisible();
         await expect(page.getByPlaceholder('เช่น XXXXXX , SUXXX')).toBeEmpty();
         //ชื่อรายวิชา
         await expect(page.getByText('ชื่อรายวิชา (ภาษาไทย) *')).toBeVisible();
-        await expect(page.locator('[name="thai_subject"]')).toBeVisible();
-        await expect(page.locator('[name="thai_subject"]')).toBeEmpty();
+        await expect(subjectPage.thaiSubjectNameField).toBeVisible();
+        await expect(subjectPage.thaiSubjectNameField).toBeEmpty();
         //หน่วยกิต
         await expect(page.getByText('หน่วยกิต *')).toBeVisible();
         await expect(page.getByRole('textbox', { name: 'เช่น X , X(X-X-X)' })).toBeVisible();
         await expect(page.getByPlaceholder('เช่น X , X(X-X-X)')).toBeEmpty();
         //ชั้นปีเเละภาคการศึกษา
         await expect(page.getByText('ชั้นปีและภาคการศึกษา *')).toBeVisible();
-        const semester = await page.locator('[name="semester"]');
-        await expect(await semester.evaluate(el => el.tagName)).toBe('SELECT');
-        await expect(semester).toContainText('-- เลือกภาคการศึกษา --');
+        await expect(await subjectPage.semesterDropdown.evaluate(el => el.tagName)).toBe('SELECT');
+        await expect(subjectPage.semesterDropdown).toContainText('-- เลือกภาคการศึกษา --');
         //ชั้นปีเเละภาคการศึกษา
         await expect(page.getByText('ชั้นปีและภาคการศึกษา *')).toBeVisible();
-        const planType = await page.locator('[name="plan_type"]');
-        await expect(await planType.evaluate(el => el.tagName)).toBe('SELECT');
-        await expect(planType).toContainText('-- เลือกแผนการศึกษา --');
+        await expect(await subjectPage.planTypeDropdown.evaluate(el => el.tagName)).toBe('SELECT');
+        await expect(subjectPage.planTypeDropdown).toContainText('-- เลือกแผนการศึกษา --');
 
         //Non-Requried field
         //ชื่อรายวิชา (ภาษาอังกฤษ)
         await expect(page.getByText('ชื่อรายวิชา (ภาษาอังกฤษ)')).toBeVisible();
-        await expect(page.locator('[name="eng_subject"]')).toBeVisible();
-        await expect(page.locator('[name="eng_subject"]')).toBeEmpty();
+        await expect(subjectPage.engSubjectNameField).toBeVisible();
+        await expect(subjectPage.engSubjectNameField).toBeEmpty();
         //วิชาบังคับ
         await expect(page.getByText('หน่วยกิต')).toBeVisible();
-        await expect(page.locator('[name="compulsory_subject"]')).toBeVisible();
-        await expect(page.locator('[name="compulsory_subject"]')).toBeEmpty();
+        await expect(subjectPage.compulsorySubjectField).toBeVisible();
+        await expect(subjectPage.compulsorySubjectField).toBeEmpty();
         //เงื่อนไข
         await expect(page.getByText('เงื่อนไข')).toBeVisible();
-        await expect(page.locator('[name="condition"]')).toBeVisible();
-        await expect(page.locator('[name="condition"]')).toBeEmpty();
+        await expect(subjectPage.conditionField).toBeVisible();
+        await expect(subjectPage.conditionField).toBeEmpty();
         //คำอธิบายรายวิชา (TH) 
         await expect(page.getByText('คำอธิบายรายวิชา (TH)')).toBeVisible();
-        await expect(page.locator('[name="description_thai"]')).toBeVisible();
-        await expect(page.locator('[name="description_thai"]')).toBeEmpty();
+        await expect(subjectPage.descriptionThaiField).toBeVisible();
+        await expect(subjectPage.descriptionThaiField).toBeEmpty();
         //Course Description (EN)
         await expect(page.getByText('Course Description (EN)')).toBeVisible();
-        await expect(page.locator('[name="description_eng"]')).toBeVisible();
-        await expect(page.locator('[name="description_eng"]')).toBeEmpty();
+        await expect(subjectPage.descriptionEngField).toBeVisible();
+        await expect(subjectPage.descriptionEngField).toBeEmpty();
         //CLOs
         await expect(page.getByText('CLOs')).toBeVisible();
-        await expect(page.locator('[name=clo]')).toBeVisible();
-        await expect(page.locator('[name=clo]')).toBeEmpty();
+        await expect(subjectPage.cloField).toBeVisible();
+        await expect(subjectPage.cloField).toBeEmpty();
 
         await expect(page.getByRole('button', { name: 'บันทึกรายวิชา' })).toBeVisible();
     });
 
-    test('AddSubject-005| [เพิ่มรายวิชา][สำเร็จ] ตรวจสอบว่า เมื่อกดปุ่ม "บันทึกรายวิชา" เเล้วระบบเเสดงผลได้ถูกต้อง เมื่อผู้ใช้งานใส่ข้อมูลครบถ้วน', async ({page}) =>{
+    test('AddSubject-005| [เพิ่มรายวิชา][สำเร็จ] ตรวจสอบว่า เมื่อกดปุ่ม "บันทึกรายวิชา" เเล้วระบบเเสดงผลได้ถูกต้อง เมื่อผู้ใช้งานใส่ข้อมูลครบถ้วน', async ({ page }) => {
+        let SubjectId = "TAuto";
+        let ThaiSubjectName = "ทดสอบวิธีออโตเมชั่น";
+        let EngSubjectName = "testautomation";
+        let Credits = "3(3-6-9)";
+        let CompulsorySubject = "CompulsorySubject";
+        let Condition = "Conditions";
+        let DescriptionThai = "คำอธิบายเพิ่มเติม";
+        let DescriptionENG = "description";
+        let CLOs = "clos"
         await loginPage.login("admin@gmail.com", "password");
+        await subjectPage.selectMunuTab("รายวิชา");
+        await subjectPage.clickAddSubjectButton();
+        await subjectPage.selectOptionForCourseIdField(3);
+        await subjectPage.fillSubjectIdField(SubjectId);
+        await subjectPage.fillThaiSubjectNameField(ThaiSubjectName);
+        await subjectPage.fillEngSubjectNameField(EngSubjectName);
+        await subjectPage.fillCreditsFieldField(Credits);
+        await subjectPage.selectOptionForSemesterField(7);
+        await subjectPage.selectOptionForPlanTypeField(2);
+        await subjectPage.fillCompulsorySubjectField(CompulsorySubject);
+        await subjectPage.fillConditionField(Condition);
+        await subjectPage.fillDescriptionThaiField(DescriptionThai);
+        await subjectPage.fillDescriptionENGField(DescriptionENG);
+        await subjectPage.fillCLOsField(CLOs);
+        await expect(subjectPage.submitBTN).toBeVisible();
+        page.once('dialog', async dialog => {
+            expect(dialog.message()).toBe('เพิ่มรายวิชาสำเร็จ');
+            await dialog.accept();
+        });
+
+        await subjectPage.clickSubmit();
+
+        await expect(subjectPage.searchSubjectField).toBeVisible();
+        await subjectPage.searchForSubject(SubjectId);
+        await expect(page.getByRole('button', { name:  `${SubjectId} - ${ThaiSubjectName}`}).first()).toBeVisible();
     });
 });
