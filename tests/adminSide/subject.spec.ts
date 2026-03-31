@@ -6,9 +6,9 @@ test.describe('Testing the course adding system. (by ชลธี เกิด�
     let loginPage: LoginPage;
     let subjectPage: SubjectPage;
 
-    test.beforeEach(async ({ page }) => {
+    test.beforeEach(async ({ page, request }) => {
         loginPage = new LoginPage(page);
-        subjectPage = new SubjectPage(page);
+        subjectPage = new SubjectPage(page, request);
         await loginPage.goto();
     });
 
@@ -83,7 +83,7 @@ test.describe('Testing the course adding system. (by ชลธี เกิด�
     });
 
     test('AddSubject-005| [เพิ่มรายวิชา][สำเร็จ] ตรวจสอบว่า เมื่อกดปุ่ม "บันทึกรายวิชา" เเล้วระบบเเสดงผลได้ถูกต้อง เมื่อผู้ใช้งานใส่ข้อมูลครบถ้วน', async ({ page }) => {
-        let SubjectId = "TAuto";
+        let SubjectId = "Auto";
         let ThaiSubjectName = "ทดสอบวิธีออโตเมชั่น";
         let EngSubjectName = "testautomation";
         let Credits = "3(3-6-9)";
@@ -117,6 +117,71 @@ test.describe('Testing the course adding system. (by ชลธี เกิด�
 
         await expect(subjectPage.searchSubjectField).toBeVisible();
         await subjectPage.searchForSubject(SubjectId);
-        await expect(page.getByRole('button', { name:  `${SubjectId} - ${ThaiSubjectName}`}).first()).toBeVisible();
+        await expect(page.getByRole('button', { name: `${SubjectId} - ${ThaiSubjectName}` }).first()).toBeVisible();
+    });
+
+    test('AddSubject-008| [เพิ่มรายวิชา][สำเร็จ] ตรวจสอบว่า ระบบเเสดงผลรายละเอียดรายวิชาได้ถูกต้อง', async ({ page }) => {
+        await loginPage.login("admin@gmail.com", "password");
+        await subjectPage.selectMunuTab("รายวิชา");
+        await subjectPage.clickSubjectIDLink('SU101');
+        await expect(page.getByRole('heading', { name: 'SU101 ศิลปะศิลปากร' })).toBeVisible();
+        await expect(page.getByText('หลักสูตร : (วท.บ) หลักสูตรวิทยาศาสตรบัณฑิต สาขาวิชาวิทยาการคอมพิวเตอร์')).toBeVisible();
+        await expect(page.getByText('ภาคการศึกษา : ปีที่ 1')).toBeVisible();
+        await expect(page.getByText('หน่วยกิต : 3(3-0-6)')).toBeVisible();
+        await expect(page.getByText('วิชาบังคับ : -')).toBeVisible();
+        await expect(page.getByText('เงื่อนไข : -')).toBeVisible();
+    });
+
+    test('AddSubject-015| [เพิ่มรายวิชา][สำเร็จ] ตรวจสอบว่า ระบบเเสดงผลได้ถูกต้อง เมื่อผู้ใช้ "ลบรายการ" สำเร็จ', async ({ page }) => {
+        await loginPage.login("admin@gmail.com", "password");
+        await subjectPage.selectMunuTab("รายวิชา");
+        await subjectPage.searchForSubject('TAuto');
+
+        let found = await page.getByRole('button', { name: 'TAuto - ทดสอบวิธีออโตเมชั่น' }).isVisible().catch(() => false);
+        if (!found) {
+            await subjectPage.createNewSubject();
+            console.log("Create Successful!");
+
+            await new Promise(resolve => setTimeout(resolve, 5000));
+
+            const timeoutMs = 30000;
+            const intervalMs = 2000;
+            const start = Date.now();
+            found = false;
+
+            while (Date.now() - start < timeoutMs) {
+                await subjectPage.searchForSubject('TAuto');
+                found = await page.getByRole('button', { name: 'TAuto - ทดสอบวิธีออโตเมชั่น' }).first().isVisible().catch(() => false);
+
+                if (found) break;
+
+                await page.reload();
+                await new Promise(resolve => setTimeout(resolve, intervalMs));
+            }
+            if (!found) {
+                throw new Error('Timeout: ไม่เจอปุ่ม TAuto - ทดสอบวิธีออโตเมชั่น หลังวนหาและ reload 30 วินาที');
+            }
+        }
+
+        await subjectPage.searchForSubject('TAuto');
+        await subjectPage.clickSubjectSearchResult('TAuto - ทดสอบวิธีออโตเมชั่น');
+        await expect(page.getByRole('heading', { name: 'TAuto ทดสอบวิธีออโตเมชั่น' })).toBeVisible();
+
+        page.once('dialog', async dialog => {
+            expect(dialog.message()).toBe('คุณต้องการลบรายวิชา TAuto ใช่หรือไม่?');
+            await dialog.accept();
+        });
+        await subjectPage.deleteSubject();
+
+        page.once('dialog', async dialog => {
+            expect(dialog.message()).toBe('ลบรายวิชาสำเร็จ');
+            await dialog.accept();
+        });
+
+        await page.waitForEvent('dialog');
+        await expect(page.getByRole('heading', { name: 'รายวิชาทั้งหมด' })).toBeVisible();
+        await subjectPage.searchForSubject('TAuto');
+        const isStillFound = await page.getByRole('button', { name: 'TAuto - ทดสอบวิธีออโตเมชั่น' }).isVisible().catch(() => false);
+        expect(isStillFound).toBe(false);
     });
 });
