@@ -1,26 +1,26 @@
 import { test, expect } from "@playwright/test";
+import { NewsPage } from "../../pages/visitorSide/newsPage";
 test.describe("News page tests", () => {
   test("NEWS-005 | เปลี่ยนหมวดข่าวแล้วแสดงผลถูกต้อง", async ({ page }) => {
-    await page.goto("https://cpsu-website-beta.vercel.app/home");
-    // ไปหน้า "ข่าวสาร"
-    await page
-      .locator("#navbar-component")
-      .getByRole("link", { name: "ข่าวสาร" })
-      .click();
+    const news = new NewsPage(page);
+    // เข้าเว็บไซต์และไปหน้า "ข่าวสาร"
+    await news.goto();
+    await news.goToNews();
+    // ตรวจสอบว่าอยู่หน้าข่าว
     await expect(page).toHaveURL(/\/news$/);
     // เลือกหมวด "ข่าวประชาสัมพันธ์"
-    const category = page.getByRole("button", { name: "ข่าวประชาสัมพันธ์" });
+    const category = news.getCategoryButton("ข่าวประชาสัมพันธ์");
     await expect(category).toBeVisible();
-    // เก็บข่าวก่อนเปลี่ยน (optional)
-    const newsItems = page.locator('a[href^="/news/"]');
+    // เก็บข้อมูลข่าวก่อนเปลี่ยนหมวด (เพื่อใช้เปรียบเทียบ)
+    const newsItems = news.getNewsItems();
     const firstBefore = await newsItems.first().textContent();
-    // click เปลี่ยนหมวด
+    // คลิกเปลี่ยนหมวดข่าว
     await category.click();
-    // เช็ค highlight
+    // ตรวจสอบว่าหมวดที่เลือกมีการ highlight
     await expect(category).toHaveClass(/active|selected|btn/);
-    // เช็คว่ามีข่าว
+    // ตรวจสอบว่ามีรายการข่าวแสดง
     await expect(newsItems.first()).toBeVisible();
-    // เช็คว่าข่าวเปลี่ยน (optional แต่ดี)
+    // ตรวจสอบว่าข่าวมีการเปลี่ยนหลังเลือกหมวด (optional)
     const firstAfter = await newsItems.first().textContent();
     expect(firstBefore).not.toBe(firstAfter);
   });

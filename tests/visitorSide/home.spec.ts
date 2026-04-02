@@ -1,36 +1,29 @@
 import { test, expect } from "@playwright/test";
+import { HomePage } from "../../pages/visitorSide/homePage";
 test.describe("Visitor - Home page", () => {
   test("HOME-002 | click news in PR section", async ({ page }) => {
-    await page.goto("https://cpsu-website-beta.vercel.app/home");
-    // หา section ข่าวประชาสัมพันธ์แบบตรง ๆ
-    const newsSection = page
-      .locator("div")
-      .filter({
-        hasText: "ข่าวประชาสัมพันธ์",
-      })
-      .first();
+    const home = new HomePage(page);
+    // เข้าเว็บไซต์หน้า Home
+    await home.goto();
+    // ตรวจสอบว่า section ข่าวประชาสัมพันธ์แสดง
+    const newsSection = home.getNewsSection();
     await expect(newsSection).toBeVisible();
-    // click "อ่านต่อ" ตัวแรกใน section นี้
-    await newsSection.getByRole("link", { name: "อ่านต่อ" }).first().click();
+    // คลิก "อ่านต่อ" ข่าวแรก
+    await home.getFirstReadMoreButton().click();
+    // ตรวจสอบว่าไปหน้ารายละเอียดข่าว
     await expect(page).toHaveURL(/\/news\/.+/);
     await expect(page.getByRole("img", { name: "news" })).toBeVisible();
   });
   test("HOME-003 | click ดูทั้งหมด แล้วไปหน้าหลักสูตร", async ({ page }) => {
-    await page.goto("https://cpsu-website-beta.vercel.app/home");
-    // หา section หลักสูตร
-    const courseSection = page
-      .locator("div")
-      .filter({
-        hasText: "หลักสูตรที่เปิดสอน",
-      })
-      .first();
+    const home = new HomePage(page);
+    // เข้าเว็บไซต์หน้า Home
+    await home.goto();
+    // ตรวจสอบว่า section หลักสูตรแสดง
+    const courseSection = home.getCourseSection();
     await expect(courseSection).toBeVisible();
-    // คลิก "ดูทั้งหมด" ใน section นี้
-    await courseSection
-      .getByRole("button", { name: "ดูทั้งหมด" })
-      .first()
-      .click();
-    // ตรวจว่าไปหน้า course
+    // คลิก "ดูทั้งหมด" ใน section หลักสูตร
+    await home.getViewAllCoursesButton().click();
+    // ตรวจสอบว่าไปหน้าหลักสูตร
     await expect(page).toHaveURL(/\/course$/);
   });
 });
