@@ -1,8 +1,8 @@
 import { test, expect } from "@playwright/test";
 import { PersonnelPage } from "../../pages/visitorSide/personnelPage";
 
-test.describe("Visitor - Personnel page", () => {
-  test("PERSONNEL-003 | เลือกหมวดบุคลากรแล้วแสดงผลถูกต้อง", async ({
+test.describe("Visitor - Personnel page (by Chayanisa)", () => {
+  test('PERSONNEL-003| [บุคลากร][สำเร็จ] ตรวจสอบการเลือกหมวดบุคลากร', async ({
     page,
   }) => {
     const personnel = new PersonnelPage(page);
