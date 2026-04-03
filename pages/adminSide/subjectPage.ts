@@ -46,7 +46,7 @@ export class SubjectPage {
         this.deleteBTN = page.getByRole('button', { name: 'ลบ' });
     }
 
-    async selectMunuTab(tabname: string) {
+    async selectMenuTab(tabname: string) {
         await this.tabMuen.filter({ hasText: tabname }).click();
     }
 
