@@ -17,4 +17,5 @@ test.describe('Testing Manage University Announce. (by ปฏิพล ดำท
         await subjectPage.selectMenuTab("การรับสมัคร");
         await expect(page.getByRole('heading', { name: 'การรับสมัคร' })).toBeVisible();
     });
+    //test
 });
