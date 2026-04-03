@@ -1,19 +1,20 @@
 import { test, expect } from "@playwright/test";
+import { CoursePage } from "../../pages/visitorSide/coursePage";
 test.describe("Visitor - Course page", () => {
   test("COURSE-002 | คลิกหลักสูตรแล้วไปหน้ารายละเอียด", async ({ page }) => {
-    await page.goto("https://cpsu-website-beta.vercel.app/home");
-    // ไปหน้า course
-    await page
-      .locator("#navbar-component")
-      .getByRole("link", { name: "หลักสูตร" })
-      .click();
+    const course = new CoursePage(page);
+    // เข้าเว็บไซต์หน้า Home
+    await page.goto("/home");
+    // ไปหน้า "หลักสูตร"
+    await course.goToCourse();
+    // ตรวจสอบว่าอยู่หน้าหลักสูตร
     await expect(page).toHaveURL(/\/course$/);
-    // เลือกหลักสูตรแรก
-    const firstCourse = page.locator('a[href^="/course/"]').first();
+    // เลือกหลักสูตรแรกในรายการ
+    const firstCourse = course.getFirstCourse();
     await expect(firstCourse).toBeVisible();
     await firstCourse.click();
-    // ตรวจผลลัพธ์
+    // ตรวจสอบว่าไปหน้ารายละเอียดหลักสูตร
     await expect(page).toHaveURL(/\/course\/.+/);
-    await expect(page.getByText(/ข้อมูลหลักสูตร/)).toBeVisible();
+    await expect(course.getCourseDetailText()).toBeVisible();
   });
 });
