@@ -14,7 +14,7 @@ test.describe('Testing the course adding system. (by ชลธี เกิด�
 
     test('AddSubject-001| [เพิ่มรายวิชา][สำเร็จ] ตรวจสอบว่า หน้า "รายวิชา" เเสดงผลได้ถูกต้อง', async ({ page }) => {
         await loginPage.login("admin@gmail.com", "password");
-        await subjectPage.selectMunuTab("รายวิชา");
+        await subjectPage.selectMenuTab("รายวิชา");
         await expect(page.getByRole('heading', { name: 'รายวิชาทั้งหมด' })).toBeVisible();
         await expect(page.getByRole('textbox', { name: 'ค้นหารหัสวิชา หรือ ชื่อวิชา...' })).toBeVisible();
         await expect(page.getByRole('textbox', { name: 'ค้นหารหัสวิชา หรือ ชื่อวิชา...' })).toBeEmpty();
@@ -23,7 +23,7 @@ test.describe('Testing the course adding system. (by ชลธี เกิด�
 
     test('AddSubject-002| [เพิ่มรายวิชา][สำเร็จ] ตรวจสอบว่า เมื่อผู้ใช้คลิ๊ก "+เพิ่มรายวิชาใหม่" เเล้วระบบเเสดงผลได้ถูกต้อง', async ({ page }) => {
         await loginPage.login("admin@gmail.com", "password");
-        await subjectPage.selectMunuTab("รายวิชา");
+        await subjectPage.selectMenuTab("รายวิชา");
         await subjectPage.clickAddSubjectButton();
         await expect(page.getByRole('heading', { name: 'เพิ่มรายวิชาใหม่' })).toBeVisible();
 
@@ -93,7 +93,7 @@ test.describe('Testing the course adding system. (by ชลธี เกิด�
         let DescriptionENG = "description";
         let CLOs = "clos"
         await loginPage.login("admin@gmail.com", "password");
-        await subjectPage.selectMunuTab("รายวิชา");
+        await subjectPage.selectMenuTab("รายวิชา");
         await subjectPage.clickAddSubjectButton();
         await subjectPage.selectOptionForCourseIdField(3);
         await subjectPage.fillSubjectIdField(SubjectId);
@@ -122,7 +122,7 @@ test.describe('Testing the course adding system. (by ชลธี เกิด�
 
     test('AddSubject-008| [เพิ่มรายวิชา][สำเร็จ] ตรวจสอบว่า ระบบเเสดงผลรายละเอียดรายวิชาได้ถูกต้อง', async ({ page }) => {
         await loginPage.login("admin@gmail.com", "password");
-        await subjectPage.selectMunuTab("รายวิชา");
+        await subjectPage.selectMenuTab("รายวิชา");
         await subjectPage.clickSubjectIDLink('SU101');
         await expect(page.getByRole('heading', { name: 'SU101 ศิลปะศิลปากร' })).toBeVisible();
         await expect(page.getByText('หลักสูตร : (วท.บ) หลักสูตรวิทยาศาสตรบัณฑิต สาขาวิชาวิทยาการคอมพิวเตอร์')).toBeVisible();
@@ -134,7 +134,7 @@ test.describe('Testing the course adding system. (by ชลธี เกิด�
 
     test('AddSubject-015| [เพิ่มรายวิชา][สำเร็จ] ตรวจสอบว่า ระบบเเสดงผลได้ถูกต้อง เมื่อผู้ใช้ "ลบรายการ" สำเร็จ', async ({ page }) => {
         await loginPage.login("admin@gmail.com", "password");
-        await subjectPage.selectMunuTab("รายวิชา");
+        await subjectPage.selectMenuTab("รายวิชา");
         await subjectPage.searchForSubject('TAuto');
 
         let found = await page.getByRole('button', { name: 'TAuto - ทดสอบวิธีออโตเมชั่น' }).isVisible().catch(() => false);

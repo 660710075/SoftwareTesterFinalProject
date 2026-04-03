@@ -5,7 +5,7 @@ export class SubjectPage {
     readonly loginPage: LoginPage;
     readonly page: Page;
     readonly request: APIRequestContext;
-    readonly tabMuen: Locator;
+    readonly tabMenu: Locator;
     readonly addSubjectBTN: Locator;
     readonly courseIdDropdown: Locator;
     readonly semesterDropdown: Locator;
@@ -27,7 +27,7 @@ export class SubjectPage {
         this.loginPage = new LoginPage(page);
         this.page = page;
         this.request = request;
-        this.tabMuen = page.locator('.list-group');
+        this.tabMenu = page.locator('.list-group');
         this.addSubjectBTN = page.getByRole('link', { name: '+ เพิ่มรายวิชาใหม่' });
         this.courseIdDropdown = page.locator('[name="course_id"]');
         this.semesterDropdown = page.locator('[name="semester"]');
@@ -46,8 +46,8 @@ export class SubjectPage {
         this.deleteBTN = page.getByRole('button', { name: 'ลบ' });
     }
 
-    async selectMunuTab(tabname: string) {
-        await this.tabMuen.filter({ hasText: tabname }).click();
+    async selectMenuTab(tabname: string) {
+        await this.tabMenu.filter({ hasText: tabname }).click();
     }
 
     async selectOptionForCourseIdField(id: number) {
