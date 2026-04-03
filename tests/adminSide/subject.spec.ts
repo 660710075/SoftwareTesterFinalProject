@@ -184,11 +184,4 @@ test.describe('Testing the course adding system. (by ชลธี เกิด�
         const isStillFound = await page.getByRole('button', { name: 'TAuto - ทดสอบวิธีออโตเมชั่น' }).isVisible().catch(() => false);
         expect(isStillFound).toBe(false);
     });
-
-    
-    test.only('Test', async ({ page }) => {
-        await loginPage.login("admin@gmail.com", "password");
-        await subjectPage.selectMenuTab("การรับสมัคร");
-        await expect(page.getByRole('heading', { name: 'การรับสมัคร' })).toBeVisible();
-    });
 });
