@@ -27,7 +27,7 @@ export class SubjectPage {
         this.loginPage = new LoginPage(page);
         this.page = page;
         this.request = request;
-        this.tabMuen = page.locator('.list-group');
+        this.tabMuen = page.locator('.list-group a');
         this.addSubjectBTN = page.getByRole('link', { name: '+ เพิ่มรายวิชาใหม่' });
         this.courseIdDropdown = page.locator('[name="course_id"]');
         this.semesterDropdown = page.locator('[name="semester"]');
@@ -47,7 +47,8 @@ export class SubjectPage {
     }
 
     async selectMenuTab(tabname: string) {
-        await this.tabMuen.filter({ hasText: tabname }).click();
+        await expect(this.tabMuen.filter({ hasText: tabname })).toBeVisible();
+        await this.tabMuen.filter({ hasText: tabname }).click()
     }
 
     async selectOptionForCourseIdField(id: number) {
