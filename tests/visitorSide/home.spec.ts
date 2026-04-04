@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { HomePage } from "../../pages/visitorSide/homePage";
-test.describe("Visitor - Home page", () => {
-  test("HOME-002 | click news in PR section", async ({ page }) => {
+test.describe("Visitor - Home page (by Chayanisa)", () => {
+  test('HOME-002| [หน้าหลัก][สำเร็จ] ตรวจสอบการคลิกข่าวในส่วนข่าวประชาสัมพันธ์', async ({ page }) => {
     const home = new HomePage(page);
     // เข้าเว็บไซต์หน้า Home
     await home.goto();
@@ -14,7 +14,7 @@ test.describe("Visitor - Home page", () => {
     await expect(page).toHaveURL(/\/news\/.+/);
     await expect(page.getByRole("img", { name: "news" })).toBeVisible();
   });
-  test("HOME-003 | click ดูทั้งหมด แล้วไปหน้าหลักสูตร", async ({ page }) => {
+  test('HOME-003| [หน้าหลัก][สำเร็จ] ตรวจสอบการคลิกหลักสูตร', async ({ page }) => {
     const home = new HomePage(page);
     // เข้าเว็บไซต์หน้า Home
     await home.goto();

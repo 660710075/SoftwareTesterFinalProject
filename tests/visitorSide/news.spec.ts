@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { NewsPage } from "../../pages/visitorSide/newsPage";
-test.describe("News page tests", () => {
-  test("NEWS-005 | เปลี่ยนหมวดข่าวแล้วแสดงผลถูกต้อง", async ({ page }) => {
+test.describe("Visitor - News page (by Chayanisa)", () => {
+  test('NEWS-005| [ข่าวสาร][สำเร็จ] ตรวจสอบการเปลี่ยนหมวดข่าว', async ({ page }) => {
     const news = new NewsPage(page);
     // เข้าเว็บไซต์และไปหน้า "ข่าวสาร"
     await news.goto();
