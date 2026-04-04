@@ -1,23 +1,25 @@
 import { test, expect } from "@playwright/test";
+import { PersonnelPage } from "../../pages/visitorSide/personnelPage";
+
 test.describe("Visitor - Personnel page", () => {
   test("PERSONNEL-003 | เลือกหมวดบุคลากรแล้วแสดงผลถูกต้อง", async ({
     page,
   }) => {
-    await page.goto("https://cpsu-website-beta.vercel.app/home");
-    // ไปหน้า "บุคลากร"
-    await page
-      .locator("#navbar-component")
-      .getByRole("link", { name: "บุคลากร" })
-      .click();
+    const personnel = new PersonnelPage(page);
+    // เข้าเว็บไซต์และไปหน้าบุคลากร
+    await personnel.goto();
+    await personnel.goToPersonnel();
+    // ตรวจสอบว่าอยู่หน้าบุคลากร
     await expect(page).toHaveURL(/\/personnel$/);
-    // เลือกหมวด
-    const category = page.getByRole("button", { name: "สายสนับสนุนวิชาการ" });
+    // เลือกหมวด "สายสนับสนุนวิชาการ"
+    const category = personnel.getCategoryButton("สายสนับสนุนวิชาการ");
+
     await expect(category).toBeVisible();
     await category.click();
-    // เช็ค highlight
+    // ตรวจสอบว่าหมวดที่เลือกมีการ highlight
     await expect(category).toHaveClass(/active|selected/);
-    // เช็คว่ามีบุคลากรแสดง (ใช้ชื่อบุคลากรแทน)
-    const personnelItems = page.getByRole("heading", { level: 5 });
+    // ตรวจสอบว่ามีรายการบุคลากรแสดง
+    const personnelItems = personnel.getPersonnelItems();
     await expect(personnelItems.first()).toBeVisible();
   });
 });
