@@ -12,7 +12,7 @@ test.describe("Testing Access History. (by ปฏิพล ดำทอง)", ()
     await loginPage.goto();
   });
 
-  test('AH-001|[การกำหนดสิทธิ์ผู้ใช้ส่วนแอดมิน][สำเร็จ] ตรวจสอบว่าหน้า "ประวัติการเข้าใช้งาน" เเสดงผลได้อย่างถูกต้อง', async ({
+  test('AccessHistory-001|[การกำหนดสิทธิ์ผู้ใช้ส่วนแอดมิน][สำเร็จ] ตรวจสอบว่าหน้า "ประวัติการเข้าใช้งาน" เเสดงผลได้อย่างถูกต้อง', async ({
     page,
   }) => {
     await loginPage.login("admin@gmail.com", "password");

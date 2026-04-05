@@ -12,7 +12,7 @@ test.describe("Testing Access History. (by ปฏิพล ดำทอง)", ()
     await loginPage.goto();
   });
 
-  test('AP-001|[หน้าการจัดการข้อมูลส่วนตัวของอาจารย์][สำเร็จ] ตรวจสอบว่าหน้า "ข้อมูลส่วนตัว" เเสดงผลได้ถูกต้อง ', async ({
+  test('ManagePersonalData-001|[หน้าการจัดการข้อมูลส่วนตัวของอาจารย์][สำเร็จ] ตรวจสอบว่าหน้า "ข้อมูลส่วนตัว" เเสดงผลได้ถูกต้อง ', async ({
     page,
   }) => {
     await loginPage.login("waijanya_s@su.ac.th", "password");
