@@ -12,14 +12,14 @@ test.describe("Testing Manage Admin. (by ปฏิพล ดำทอง)", () =
     await loginPage.goto();
   });
 
-  test('MA-001|[การกำหนดสิทธิ์ผู้ใช้ส่วนแอดมิน][สำเร็จ] ตรวจสอบว่าหน้า "กำหนดสิทธิ์ผู้ใช้" เเสดงผลได้อย่างถูกต้อง', async ({
+  test('ManageAdmin-001|[การกำหนดสิทธิ์ผู้ใช้ส่วนแอดมิน][สำเร็จ] ตรวจสอบว่าหน้า "กำหนดสิทธิ์ผู้ใช้" เเสดงผลได้อย่างถูกต้อง', async ({
     page,
   }) => {
     await loginPage.login("admin@gmail.com", "password");
     await subjectPage.selectMenuTab("กำหนดสิทธิ์ผู้ใช้");
     await expect(page.getByRole("heading", { name: "กำหนดสิทธิ์ผู้ใช้" }),).toBeVisible();
   });
-  test('MU-003|[การจัดการรับสมัครส่วนผู้ดูแล][สำเร็จ] ตรวจสอบว่าเมื่อกด "เพิ่มข้อมูล" จะเเสดงหน้าสร้างการรับสมัครได้อย่างถูกต้อง', async ({page,}) => {
+  test('ManageAdmin-002|[การกำหนดสิทธิ์ผู้ใช้ส่วนแอดมิน][สำเร็จ] ตรวจสอบว่าเมื่อกด "+เพิ่มผู้ใช้" จะเเสดงหน้าสร้างการกำหนดสิทธิ์ผู้ใช้ได้อย่างถูกต้อง', async ({page,}) => {
     await loginPage.login("admin@gmail.com", "password");
     await subjectPage.selectMenuTab("กำหนดสิทธิ์ผู้ใช้");
     await page.getByRole('button', { name: '+ เพิ่มผู้ใช้' }).click();

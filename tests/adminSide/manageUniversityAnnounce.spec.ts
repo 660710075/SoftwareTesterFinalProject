@@ -12,7 +12,7 @@ test.describe("Testing Manage University Announce. (by ปฏิพล ดำท
     await loginPage.goto();
   });
 
-  test('MU-002|[การจัดการรับสมัครส่วนผู้ดูแล][สำเร็จ] ตรวจสอบว่าหน้า "จัดการประกาศการรับสมัคร" เเสดงผลได้ถูกต้อง ในขณะที่มีข้อมูลอยู่ข้างใน', async ({
+  test('ManageUniversityAnnounce-002|[การจัดการรับสมัครส่วนผู้ดูแล][สำเร็จ] ตรวจสอบว่าหน้า "จัดการประกาศการรับสมัคร" เเสดงผลได้ถูกต้อง ในขณะที่มีข้อมูลอยู่ข้างใน', async ({
     page,
   }) => {
     await loginPage.login("admin@gmail.com", "password");
@@ -20,7 +20,7 @@ test.describe("Testing Manage University Announce. (by ปฏิพล ดำท
     await expect(page.getByRole("heading", { name: "การรับสมัคร" })).toBeVisible();
   });
 
-  test('MU-003|[การจัดการรับสมัครส่วนผู้ดูแล][สำเร็จ] ตรวจสอบว่าเมื่อกด "เพิ่มข้อมูล" จะเเสดงหน้าสร้างการรับสมัครได้อย่างถูกต้อง', async ({
+  test('ManageUniversityAnnounce-003|[การจัดการรับสมัครส่วนผู้ดูแล][สำเร็จ] ตรวจสอบว่าเมื่อกด "เพิ่มข้อมูล" จะเเสดงหน้าสร้างการรับสมัครได้อย่างถูกต้อง', async ({
     page,
   }) => {
     await loginPage.login("admin@gmail.com", "password");
