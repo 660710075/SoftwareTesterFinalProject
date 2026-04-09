@@ -26,7 +26,4 @@ test.describe('Testing the login system. (by นาขวัญ วิฑูร�
         await expect(page).toHaveURL('https://cpsu-website-beta.vercel.app/login');
     
     });
-
-    
-    
 });

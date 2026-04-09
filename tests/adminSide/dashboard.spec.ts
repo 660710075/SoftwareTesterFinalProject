@@ -31,9 +31,4 @@ test.describe('Testing the Dashboard and Card Links. (by นาขวัญ ว�
         await expect(page).toHaveURL('https://cpsu-website-beta.vercel.app/admin/subject');
 
     });
-
-
-
-    
-    
 });

@@ -69,6 +69,4 @@ test.describe.serial('Testing News Management. (by นาขวัญ วิฑ�
         await expect(page.getByText(testTitle).first()).not.toBeVisible();
 
     });
-    
-    
 });

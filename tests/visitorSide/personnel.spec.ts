@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { PersonnelPage } from "../../pages/visitorSide/personnelPage";
 
-test.describe("Visitor - Personnel page", () => {
+test.describe("Visitor - Personnel page (by ชญานิศา ขุมเพ็ชร)", () => {
   test("PERSONNEL-003 | เลือกหมวดบุคลากรแล้วแสดงผลถูกต้อง", async ({
     page,
   }) => {
