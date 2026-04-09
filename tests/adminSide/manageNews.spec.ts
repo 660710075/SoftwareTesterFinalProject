@@ -2,15 +2,15 @@ import { expect, test } from '@playwright/test';
 import { LoginPage } from '../../pages/adminSide/loginPage';
 import { AdminNewsPage } from '../../pages/adminSide/adminNewsPage';
 
-test.describe.serial('Testing News Management. (by นาขวัญ วิฑูรย์สถิตกุล)', () => {
+test.describe('Testing News Management. (by นาขวัญ วิฑูรย์สถิตกุล)', () => {
     let loginPage: LoginPage;
     let adminNewsPage: AdminNewsPage;
     let testTitle: string;
-    
+
     test.beforeEach(async ({ page }) => {
         loginPage = new LoginPage(page);
         adminNewsPage = new AdminNewsPage(page)
-        
+
         await loginPage.goto();
         await loginPage.login("admin@gmail.com", "password");
         await expect(page).toHaveURL('https://cpsu-website-beta.vercel.app/admin/dashboard');
@@ -24,18 +24,19 @@ test.describe.serial('Testing News Management. (by นาขวัญ วิฑ�
 
         await adminNewsPage.clickAddNews();
         await adminNewsPage.filltitleInput(testTitle)
-        await adminNewsPage.contentInput.click(); 
+        await adminNewsPage.contentInput.click();
         await adminNewsPage.fillcontentInput('ทดสอบเนื้อหาข่าวสาร')
         await adminNewsPage.selectCategory('4')
 
         //รูป
         await adminNewsPage.uploadCoverImage('testData/testNewsImg.JPG');
+        await expect(adminNewsPage.confirmImageCropBtn).toBeVisible({ timeout: 10000 });
         await adminNewsPage.confirmImageCropBtn.click();
         await adminNewsPage.uploadImage('testData/testNewsImg.JPG');
 
         page.once('dialog', async dialog => {
-            expect(dialog.message()).toContain('เผยแพร่ข่าวสารสำเร็จ'); 
-            await dialog.accept(); 
+            expect(dialog.message()).toContain('เผยแพร่ข่าวสารสำเร็จ');
+            await dialog.accept();
         });
 
         await adminNewsPage.publishNews();
@@ -54,8 +55,8 @@ test.describe.serial('Testing News Management. (by นาขวัญ วิฑ�
 
         await page.waitForLoadState('networkidle');
 
-        page.once('dialog', async dialog => { 
-            expect(dialog.message()).toContain('คุณแน่ใจหรือไม่ว่าต้องการลบข่าวนี้?'); 
+        page.once('dialog', async dialog => {
+            expect(dialog.message()).toContain('คุณแน่ใจหรือไม่ว่าต้องการลบข่าวนี้?');
             await dialog.accept();
         });
 

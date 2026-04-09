@@ -3,7 +3,7 @@ import { Page, Locator, expect } from '@playwright/test';
 export class AdminNewsPage {
   readonly page: Page;
   readonly addNewsButton: Locator;
-  
+
   readonly titleInput: Locator;
   readonly contentInput: Locator;
   readonly categoryDropdown: Locator;
@@ -22,15 +22,21 @@ export class AdminNewsPage {
     this.contentInput = page.getByRole('textbox', { name: 'Editor editing area: main.' }); // เนื้อหา
     this.categoryDropdown = page.getByRole('combobox'); //ประเภทข่าว
 
-    this.coverImageInput = page.getByRole('button', { name: 'Choose File' }).first(); //ภาพหน้าปก
+    this.coverImageInput = this.coverImageInput = page.locator('input[type="file"][accept="image/*"]').first();
+    // page
+    //   .getByText('รูปภาพหน้าปกข่าว')
+    //   .locator('..')
+    //   .locator('input[type="file"]'); //ภาพหน้าปก
     this.confirmImageCropBtn = page.getByRole('button', { name: 'ตกลง' })
 
-    this.imageInput = page.getByRole('button', { name: 'Choose File' }).nth(1); //ภาพข่าว
-
+    this.imageInput = page
+      .getByText('รูปภาพข่าว')
+      .locator('..')
+      .locator('input[type="file"]'); //ภาพข่าว
     this.publishBtn = page.getByRole('button', { name: 'เผยแพร่' })
 
     this.deleteNewsBtn = page.getByRole('button', { name: 'ลบ' });
-    
+
   }
 
   async goto() {
@@ -54,6 +60,7 @@ export class AdminNewsPage {
   }
 
   async uploadCoverImage(filename: string) {
+    await this.coverImageInput.waitFor({ state: 'attached' });
     await this.coverImageInput.setInputFiles(filename);
   }
 
@@ -63,10 +70,10 @@ export class AdminNewsPage {
 
   async publishNews() {
     await this.publishBtn.click();
-  } 
+  }
 
   async clickDeleteNews() {
     await this.deleteNewsBtn.click();
-}
-  
+  }
+
 }
