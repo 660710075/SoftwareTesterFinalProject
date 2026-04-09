@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { CoursePage } from "../../pages/visitorSide/coursePage";
-test.describe("Visitor - Course page", () => {
+test.describe("Visitor - Course page (by ชญานิศา ขุมเพ็ชร)", () => {
   test("COURSE-002 | คลิกหลักสูตรแล้วไปหน้ารายละเอียด", async ({ page }) => {
     const course = new CoursePage(page);
     // เข้าเว็บไซต์หน้า Home

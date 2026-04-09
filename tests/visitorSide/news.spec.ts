@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { NewsPage } from "../../pages/visitorSide/newsPage";
-test.describe("News page tests", () => {
+test.describe("News page tests (by ชญานิศา ขุมเพ็ชร)", () => {
   test("NEWS-005 | เปลี่ยนหมวดข่าวแล้วแสดงผลถูกต้อง", async ({ page }) => {
     const news = new NewsPage(page);
     // เข้าเว็บไซต์และไปหน้า "ข่าวสาร"

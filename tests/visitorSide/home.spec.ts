@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { HomePage } from "../../pages/visitorSide/homePage";
-test.describe("Visitor - Home page", () => {
+test.describe("Visitor - Home page (by ชญานิศา ขุมเพ็ชร)", () => {
   test("HOME-002 | click news in PR section", async ({ page }) => {
     const home = new HomePage(page);
     // เข้าเว็บไซต์หน้า Home
