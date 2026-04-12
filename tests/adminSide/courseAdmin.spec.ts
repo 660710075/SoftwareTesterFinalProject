@@ -27,8 +27,8 @@ test.describe("Testing Course Page. (by นครินทร์ ว่องไ
   test('CourseA-002 | [หลักสูตร][Success]ลบหลักสูตร', async ({
     page,
   }) => {
-    const course = page.locator('.card').filter({ has: page.locator('.card-title', { hasText: /^test000$/ }) });
-    await course.locator('#btn-detailcourse').click();
+    await expect(page.getByText('test000เทสดูรายละเอียด')).toBeVisible();
+    await page.click('.card:has-text("test000") >> #btn-detailcourse');
 
     page.once('dialog', async dialog => {
         await dialog.accept();         // Clicks "OK"
